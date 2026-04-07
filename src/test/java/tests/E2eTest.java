@@ -2,6 +2,7 @@ package tests;
 
 import com.codeborne.selenide.Condition;
 import config.UiTestConfig;
+import io.qameta.allure.Step;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,40 +13,89 @@ public class E2eTest extends UiTestConfig {
     @Test
     @DisplayName("Полный путь пользователя: логин → выбор товара → корзина → оформление")
     void fullUserJourney() {
-        // 1. Логин
+        openLoginPage();
+        enterUsername("standard_user");
+        enterPassword("secret_sauce");
+        clickLoginButton();
+        verifyLoginSuccess("Swag Labs");
+
+        addToCart("sauce-labs-backpack");
+        goToCart();
+        verifyCartHasItem();
+        clickCheckout();
+        fillCheckoutForm("Test", "User", "12345");
+        verifySummaryPage();
+        finishPurchase();
+        verifyOrderComplete("Thank you for your order!");
+    }
+
+    // Шаги логина
+    @Step("Открыть страницу логина")
+    private void openLoginPage() {
         open("https://www.saucedemo.com/");
-        $("#user-name").setValue("standard_user");
-        $("#password").setValue("secret_sauce");
+    }
+
+    @Step("Ввести имя пользователя: {username}")
+    private void enterUsername(String username) {
+        $("#user-name").setValue(username);
+    }
+
+    @Step("Ввести пароль")
+    private void enterPassword(String password) {
+        $("#password").setValue(password);
+    }
+
+    @Step("Нажать кнопку Login")
+    private void clickLoginButton() {
         $("#login-button").click();
+    }
 
-        // 2. Проверка, что мы на странице каталога
-        $(".app_logo").shouldHave(Condition.text("Swag Labs"));
+    @Step("Проверить успешный вход")
+    private void verifyLoginSuccess(String expectedText) {
+        $(".app_logo").shouldHave(Condition.text(expectedText));
+    }
 
-        // 3. Добавляем товар в корзину
-        $("#add-to-cart-sauce-labs-backpack").click();
+    // Шаги корзины и покупки
+    @Step("Добавить товар: {productId}")
+    private void addToCart(String productId) {
+        $("#add-to-cart-" + productId).click();
+    }
 
-        // 4. Переходим в корзину
+    @Step("Перейти в корзину")
+    private void goToCart() {
         $(".shopping_cart_link").click();
+    }
 
-        // 5. Проверяем, что товар добавился
+    @Step("Проверить, что товар в корзине")
+    private void verifyCartHasItem() {
         $(".cart_item").shouldBe(Condition.visible);
+    }
 
-        // 6. Нажимаем Checkout
+    @Step("Нажать Checkout")
+    private void clickCheckout() {
         $("#checkout").click();
+    }
 
-        // 7. Заполняем форму оформления
-        $("#first-name").setValue("Test");
-        $("#last-name").setValue("User");
-        $("#postal-code").setValue("12345");
+    @Step("Заполнить форму: {firstName} {lastName}, {postalCode}")
+    private void fillCheckoutForm(String firstName, String lastName, String postalCode) {
+        $("#first-name").setValue(firstName);
+        $("#last-name").setValue(lastName);
+        $("#postal-code").setValue(postalCode);
         $("#continue").click();
+    }
 
-        // 8. Проверяем, что попали на страницу подтверждения
+    @Step("Проверить страницу подтверждения")
+    private void verifySummaryPage() {
         $(".summary_total_label").shouldBe(Condition.visible);
+    }
 
-        // 9. Завершаем покупку
+    @Step("Завершить покупку")
+    private void finishPurchase() {
         $("#finish").click();
+    }
 
-        // 10. Проверяем успешное завершение
-        $(".complete-header").shouldHave(Condition.text("Thank you for your order!"));
+    @Step("Проверить успешное завершение")
+    private void verifyOrderComplete(String expectedMessage) {
+        $(".complete-header").shouldHave(Condition.text(expectedMessage));
     }
 }
