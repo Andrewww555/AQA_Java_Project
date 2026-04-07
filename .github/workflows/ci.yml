@@ -21,7 +21,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Start WireMock with Docker
-        run: docker-compose up -d
+        run: docker compose up -d
 
       - name: Wait for WireMock
         run: sleep 5
