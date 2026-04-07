@@ -19,7 +19,7 @@ public class LoginTest extends UiTestConfig {
         enterUsername("standard_user");
         enterPassword("secret_sauce");
         clickLoginButton();
-        verifyLoginSuccess("Swag Labs");
+        verifyLoginSuccess("Wrong Text");
     }
 
     @ParameterizedTest(name = "{0} / {1}")
