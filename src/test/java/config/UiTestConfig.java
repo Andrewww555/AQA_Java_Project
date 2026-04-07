@@ -10,7 +10,7 @@ public class UiTestConfig {
     @BeforeAll
     public static void setUp() {
         Configuration.browser = "chrome";
-        Configuration.headless = false;
+        Configuration.headless = true;
         Configuration.timeout = 10000;
         Configuration.browserSize = "1920x1080";
 
