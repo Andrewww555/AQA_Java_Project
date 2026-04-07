@@ -1,0 +1,1 @@
+{"uuid":"35310c90-7b11-45d7-9334-c595e24aea10","name":"GET /health — сервис должен вернуть статус OK","children":["e6130b92-9bfe-41ca-bf7e-5179388bfe32"],"befores":[],"afters":[],"start":1775559126572,"stop":1775559127414}

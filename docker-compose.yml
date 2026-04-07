@@ -1,0 +1,10 @@
+﻿version: '3.8'
+
+services:
+  mock-api:
+    image: wiremock/wiremock:latest
+    command: --verbose
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./wiremock:/home/wiremock/mappings

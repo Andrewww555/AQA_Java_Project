@@ -1,0 +1,4 @@
+﻿{
+    "request": {"method": "PUT", "urlPath": "/orders/123"},
+    "response": {"status": 200, "jsonBody": {"status": "UPDATED"}, "headers": {"Content-Type": "application/json"}}
+}

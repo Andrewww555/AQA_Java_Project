@@ -1,0 +1,4 @@
+﻿{
+    "request": {"method": "DELETE", "urlPath": "/orders/123"},
+    "response": {"status": 204}
+}

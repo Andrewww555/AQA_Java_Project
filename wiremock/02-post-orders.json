@@ -1,0 +1,4 @@
+﻿{
+    "request": {"method": "POST", "urlPath": "/orders"},
+    "response": {"status": 201, "jsonBody": {"orderId": 12345, "status": "CREATED"}, "headers": {"Content-Type": "application/json"}}
+}
